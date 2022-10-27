@@ -1,0 +1,1 @@
+# vite-tailwindcss-fronted-platform
