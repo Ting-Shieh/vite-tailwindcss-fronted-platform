@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vueuse/core": "^9.4.0",
     "postcss-import": "^15.0.0",
     "postcss-nesting": "^10.2.0",
     "vue": "^3.2.41",
