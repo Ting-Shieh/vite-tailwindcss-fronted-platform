@@ -5,8 +5,8 @@ import { join } from 'path'
 export default defineConfig({
   plugins: [vue()],
   // 定義軟連結
-  resolve:{
-    alias:{
+  resolve: {
+    alias: {
       '@': join(__dirname, '/src')
     }
   }
