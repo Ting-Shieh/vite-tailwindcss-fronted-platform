@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import router from './router'
+import router from './router/index.js'
 import './style.css'
 // 導入tailwind的基礎指令會及檔
 import './styles/index.scss'

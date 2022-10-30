@@ -1,5 +1,8 @@
 <template>
-    <div class="">這是首頁</div>
+  <div class="">
+    <navigation-vue />
+  </div>
 </template>
 <script setup>
+import NavigationVue from './components/navigation/index.vue'
 </script>
