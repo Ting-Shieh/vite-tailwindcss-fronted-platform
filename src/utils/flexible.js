@@ -2,11 +2,12 @@
 import { computed } from "vue";
 import { PC_DEVICE_WIDTH } from '@/constants'
 import { useWindowSize } from '@vueuse/core'
+
 /**
- * 初始化 rem 基準值，最大為 40 px 
+ * 初始化 rem 基準值，最大為 40 px
  */
-const { width } = useWindowSize()
 export const useRem = () => {
+  // 定義最大的fontSize
   const MAX_FONT_SIZE = 40
   // 監聽 html 文檔被解析完成的事件
   document.addEventListener('DOMContentLoaded', () => {
@@ -23,6 +24,7 @@ export const useRem = () => {
 /**
  * 判斷當前設備是移動端還是pc端
  */
+ const { width } = useWindowSize()
 export const isMobileTerminal = computed(() => {
     // 響應式視圖處理
     // return document.documentElement.clientWidth < PC_DEVICE_WIDTH // 非響應式

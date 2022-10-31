@@ -4,8 +4,12 @@ import { useRem } from './utils/flexible.js'
 import './style.css'
 // 導入tailwind的基礎指令匯集檔
 import './styles/index.scss'
+// vite處理svg
+import 'virtual:svg-icons-register'
+// 導入通用組建註冊
+import mLibs from './libs/index.js'
 import App from './App.vue'
 
 useRem()
 const app = createApp(App)
-app.use(router).mount('#app')
+app.use(mLibs).use(router).mount('#app')
