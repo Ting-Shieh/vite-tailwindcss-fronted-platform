@@ -7,4 +7,8 @@ import { isMobileTerminal } from './utils/flexible.js'
   <router-view></router-view>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss">
+.this {
+  border: 1px solid red;
+}
+</style>

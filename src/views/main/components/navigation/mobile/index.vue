@@ -1,6 +1,8 @@
 <template>
   <div class="bg-white sticky top-0 left-0 z-10">
     <ul class="relative flex overflow-x-auto p-1 text-xs text-zinc-600 overflow-hidden">
+      <!-- 滑塊 -->
+      <li ref="sliderRef" class="this absolute bg-zinc-900 rounded-lg h-[22px] duration-200" :style="sliderStyle"></li>
       <!-- categoryItem class="last:mr-4" 指定最後一個距離右側的距離 -->
       <li
         v-for="item in data"
@@ -16,11 +18,18 @@
   </div>
 </template>
 <script setup>
+import { ref } from 'vue';
+
 defineProps({
   data: {
     type: Array,
     required: true
   }
+})
+// 滑塊
+const sliderStyle = ref({
+  transform: `translateX(0px)`,
+  width: '60px'
 })
 </script>
 <style lang="scss" scoped>
