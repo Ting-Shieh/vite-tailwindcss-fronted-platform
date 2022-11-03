@@ -15,11 +15,17 @@
         {{ item.name }}
       </li>
       <!-- 漢堡按鈕 -->
-      <li class="z-20 fixed top-0 right-[-1px] h-4 px-1 flex items-center bg-white shadow-l-white">
+      <li 
+        class="z-20 fixed top-0 right-[-1px] h-4 px-1 flex items-center bg-white shadow-l-white"
+        @click="isOpenPopup = !isOpenPopup"
+      >
         <m-svg-icon class="w-1.5 h-1.5" name="hamburger"></m-svg-icon>
       </li>
     </ul>
   </div>
+  <m-popup v-model="isOpenPopup">
+    <div class="">測試內容</div>
+  </m-popup>
 </template>
 <script setup>
 import { computed, onBeforeUpdate, ref, watch } from 'vue';
@@ -33,6 +39,7 @@ defineProps({
 
 // data
 const ulRef = ref(null)
+const isOpenPopup = ref(false)
 const currentCategoryIndex = ref(0) // 選中 item 下標
 /** 滑塊 */
 const sliderStyle = ref({
