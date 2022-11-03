@@ -30,33 +30,31 @@ defineProps({
     required: true
   }
 })
+
 // data
 const ulRef = ref(null)
 const currentCategoryIndex = ref(0) // 選中 item 下標
 /** 滑塊 */
 const sliderStyle = ref({
   transform: `translateX(0px)`,
-  width: '60px'
+  width: '52px'
 })
-/** 獲取填充的所有 item 元素 */
-let itemRefs = []
-const setItemRef = (el) => {
-  if (el) {
-    itemRefs.push(el)
-  }
-}
-// update
+
+// beforeupdated 數據改變後，Dom變化前
 onBeforeUpdate(() => {
   itemRefs = []
 })
+
 // hooks
 const { x: ulScrollLeft } = useScroll(ulRef) // 獲取 ul, 以計算偏移位置
+
 // computed
 const setItemCls = computed(() => (index) => {
   return {
     'text-zinc-100': currentCategoryIndex.value === index
   }
 })
+
 // watch
 watch(currentCategoryIndex, (nV) => {
   // 獲取選中元素的 left and width
@@ -68,10 +66,20 @@ watch(currentCategoryIndex, (nV) => {
     width: width + 'px'
   }
 })
+
 // methods
 const onItemClick = (index) => {
   currentCategoryIndex.value = index
-
+}
+/**
+ * 獲取填充的所有 item 元素
+ * @param {*} el 
+ */
+let itemRefs = []
+const setItemRef = (el) => {
+  if (el) {
+    itemRefs.push(el)
+  }
 }
 </script>
 <style lang="scss" scoped>
