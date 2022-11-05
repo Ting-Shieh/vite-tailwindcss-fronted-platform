@@ -24,10 +24,11 @@
     </ul>
   </div>
   <m-popup v-model="isOpenPopup">
-    <div class="">測試內容</div>
+    <menu-vue :category="data" @onItemClick="onItemClick"></menu-vue>
   </m-popup>
 </template>
 <script setup>
+import MenuVue from '@/views/main/components/menu/index.vue'
 import { computed, onBeforeUpdate, ref, watch } from 'vue';
 import { useScroll } from '@vueuse/core'
 defineProps({
@@ -77,6 +78,8 @@ watch(currentCategoryIndex, (nV) => {
 // methods
 const onItemClick = (index) => {
   currentCategoryIndex.value = index
+  //
+  isOpenPopup.value = false
 }
 /**
  * 獲取填充的所有 item 元素
@@ -88,6 +91,7 @@ const setItemRef = (el) => {
     itemRefs.push(el)
   }
 }
+
 </script>
 <style lang="scss" scoped>
 
