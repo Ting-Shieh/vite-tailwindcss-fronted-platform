@@ -3,7 +3,7 @@ export default [
   {
     path: '/',
     name: 'main',
-    componnent: () => import('@/views/layouts/index.vue'),
+    component: () => import('@/views/layouts/index.vue'),
     children: []
   }
 ]
