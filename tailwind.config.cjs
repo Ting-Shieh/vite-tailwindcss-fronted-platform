@@ -22,6 +22,10 @@ module.exports = {
       // 期望漢堡按鈕存在一個横向的陰影效果，在 tailwind 中没有對應的樣式，所以我们需要新增該樣式
       boxShadow: {
         'l-white': '-10px 0 10px white'
+      },
+      colors: {
+        main: '#f44c58',
+        'hover-main': '#f32836'
       }
     },
   },
