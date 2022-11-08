@@ -1,7 +1,13 @@
 <template>
   <div class="w-full">
-    <m-search></m-search>
+    <m-search v-model="inputValue">
+      <template #dropdown>
+        <div>Dropdown</div>
+      </template>
+    </m-search>
   </div>
 </template>
 <script setup>
+import { ref } from 'vue'
+const inputValue = ref('')
 </script>
