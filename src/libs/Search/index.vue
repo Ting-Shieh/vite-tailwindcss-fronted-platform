@@ -17,23 +17,25 @@
       <m-svg-icon
         v-show="inputValue"
         name="input-delete"
-        class="w-1.5 h-1.5 this absolute translate-y-[-50%] top-[50%] right-9 duration-500 cursor-pointer"
+        class="w-1.5 h-1.5 absolute translate-y-[-50%] top-[50%] right-9 duration-500 cursor-pointer"
         @click="onClearClick"
       ></m-svg-icon>
       <!-- 分割線 -->
       <div
-        class="opacity h-1.5 w-[1px] absolute translate-y-[-50%] top-[50%] right-[62px] duration-500 bg-zinc-200 group-hover:opacity-100"
+        class="opacity-0 h-1.5 w-[1px] absolute translate-y-[-50%] top-[50%] right-[62px] duration-500 bg-zinc-200 group-hover:opacity-100"
       ></div>
       <!-- TODO: 搜尋按鈕（通用組建） -->
       <m-button
+        icon="search"
+        iconColor="#fff"
         @click="onSearchHandler"
-        class="absolute translate-y-[-50%] top-[50%] right-1 rounded-xl duration-500 opacity-0 group-hover:opacity-100" icon="search" iconColor="#fff"
+        class="opacity-0 absolute translate-y-[-50%] top-[50%] right-1 rounded-full duration-500 group-hover:opacity-100"
       ></m-button>
     </div>
     <!-- 下拉區 -->
     <transition name="slider">
       <div
-        v-if="$slot.dropdown"
+        v-if="$slots.dropdown"
         v-show="isFocus"
         class="max-h-[368px] w-full text-base overflow-auto bg-white absolute left-0 top-[56px] p-2 rounded z-20 border border-zinc-200 duration-200 hover:shadow-3xl"
       > 
@@ -42,14 +44,7 @@
     </transition>
   </div>
 </template>
-<script setup>
-import { useVModel, onClickOutside } from '@vueuse/core'
-const props = defineProps({
-  modelValue: {
-    type: String,
-    required: true
-  }
-})
+<script>
 // 所有事件通知
 const EMIT_UPDATE_MODELVALUE = 'update:modelValue' // 
 const EMIT_SEARCH = 'search' // 觸發搜索（點擊或返回）事件
@@ -57,6 +52,26 @@ const EMIT_CLEAR = 'clear' // 刪除所有文本事件
 const EMIT_INPUT = 'input' // 輸入事件
 const EMIT_FOCUS = 'focus' // 獲取焦點事件
 const EMIT_BLUR = 'blur' // 失去焦點事件
+export default {}
+</script>
+<!-- 
+  1. 輸入內容實現雙向數據綁定
+  2. 搜尋按鈕在 hover 時展示
+  3. 一鍵清空文本
+  4. 觸發搜索
+  5. 控制下拉展示區的展示
+  6. 事件處理
+ -->
+<script setup>
+import { ref, watch } from 'vue'
+import { useVModel, onClickOutside } from '@vueuse/core'
+const props = defineProps({
+  modelValue: {
+    type: String,
+    required: true
+  }
+})
+
 // emits
 const emits = defineEmits([
   EMIT_UPDATE_MODELVALUE,
@@ -80,11 +95,12 @@ const onClearClick = () => {
 /** 觸發搜索 */
 const onSearchHandler = () => {
   emits(EMIT_SEARCH, inputValue.value)
-  emits(EMIT_FOCUS)
+  // emits(EMIT_FOCUS)
 }
 /** 監聽焦點行為 */
 const onFocusHandler = () => {
   isFocus.value = true
+  emits(EMIT_FOCUS)
 }
 /** 失去焦點 */
 const onBlurHandler = () => {

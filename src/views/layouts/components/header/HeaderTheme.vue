@@ -1,5 +1,5 @@
 <template>
-  <m-popover class="">
+  <m-pop-over class="">
     <template #reference>
       <m-svg-icon
         name="theme-light"
@@ -21,10 +21,10 @@
         <span class="text-zinc-800 text-sm">{{ item.name }}</span>
       </div>
     </div>
-  </m-popover>
+  </m-pop-over>
 </template>
 <script setup>
-import { THEME_SYSTEM, THEME_LIGHT, THEME_DARK } from '@/constant/index.js'
+import { THEME_SYSTEM, THEME_LIGHT, THEME_DARK } from '@/constants/index.js'
 import {} from 'vue'
 // 建構渲染數據源
 const themeArr = [
