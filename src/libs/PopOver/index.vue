@@ -36,12 +36,15 @@ const placementEnum = [
   PROP_BOTTOM_LEFT,
   PROP_BOTTOM_RIGHT
 ]
+// 延遲關閉時長
+const DELAY_TIME = 100
 export default {}
 </script>
 <script setup>
 import { nextTick, ref, watch } from 'vue'
 
 const props = defineProps({
+  // 控制氣泡彈出位置，給開發者錯誤提示
   placement: {
     type: String,
     default: 'bottom-left',
@@ -71,6 +74,8 @@ watch(isVisable, (nV) => {
     return
   }
   // 等待渲染成功後
+  // [ vue 在數據改變後，需等待一段時間 Dom 才會變化，
+  //  所以我們可以通過 nextTick 函數的參數，來監聽Dom變化之後的回調．]
   nextTick(() => {
     switch (props.placement) {
       // 左上
@@ -105,13 +110,32 @@ const useElementSize = (target) => {
     height: target.offsetHeight
   }
 }
+/**
+ * TODO: 處理慢速移動時，氣泡消失問題
+ * 因在 reference 與 氣泡之間存在間隔，
+ * 當鼠標移動到這個間隔處時，就會觸發 mouseleave 鼠標移出事件，
+ * 那此時 isVisable 就會變成 false。
+ * [處理方式]
+ * 鼠標剛離開時，不去立刻修改 isVisable，
+ * 而是延遲一段時間，如果在這段時間內，再次觸發了鼠標移入事件，則不再修改 isViable
+ */
+// 控制延遲關閉
+let timeout = null
 /** 鼠標移出的觸發行為 */
 const onMouseleave = () => {
-  isVisable.value = false
+  // 延時裝置
+  timeout = setTimeout(() => {
+    isVisable.value = false
+    timeout = null
+  }, DELAY_TIME)
 }
 /** 鼠標移入的觸發行為 */
 const onMouseenter = () => {
   isVisable.value = true
+  // 再次觸發時，清理延時裝置
+  if (timeout) {
+    clearTimeout(timeout)
+  }
 }
 </script>
 <style lang="scss" scoped>
