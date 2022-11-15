@@ -6,7 +6,7 @@
       <!-- categoryItem class="last:mr-4" 指定最後一個距離右側的距離 -->
       <li
         :ref="setItemRef"
-        v-for="(item, index) in data"
+        v-for="(item, index) in $store.getters.categorys"
         :key="item.id"
         class="shrink-0 px-1.5 py-0.5 z-10 duration-200 last:mr-4"
         :class="setItemCls(index)"
@@ -24,19 +24,13 @@
     </ul>
   </div>
   <m-popup v-model="isOpenPopup">
-    <menu-vue :category="data" @onItemClick="onItemClick"></menu-vue>
+    <menu-vue @onItemClick="onItemClick"></menu-vue>
   </m-popup>
 </template>
 <script setup>
 import MenuVue from '@/views/main/components/menu/index.vue'
 import { computed, onBeforeUpdate, ref, watch } from 'vue';
 import { useScroll } from '@vueuse/core'
-defineProps({
-  data: {
-    type: Array,
-    required: true
-  }
-})
 
 // data
 const ulRef = ref(null)

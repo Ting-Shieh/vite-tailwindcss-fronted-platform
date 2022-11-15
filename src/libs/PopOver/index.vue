@@ -37,7 +37,7 @@ const placementEnum = [
   PROP_BOTTOM_RIGHT
 ]
 // 延遲關閉時長
-const DELAY_TIME = 100
+const DELAY_TIME = 200
 export default {}
 </script>
 <script setup>
