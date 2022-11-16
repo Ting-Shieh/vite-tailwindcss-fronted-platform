@@ -1,9 +1,11 @@
 <template>
   <mobile-navigation v-if="isMobileTerminal"></mobile-navigation>
+  <pc-navigation v-else></pc-navigation>
 </template>
 <script setup>
 import { isMobileTerminal } from '@/utils/flexible.js'
 import mobileNavigation from './mobile/index.vue'
+import pcNavigation from './pc/index.vue'
 import { useStore } from 'vuex'
 const store = useStore()
 // TODO: 數據為公有數據，移動到 vuex 中進行抽離處理。
