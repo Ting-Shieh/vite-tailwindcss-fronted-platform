@@ -3,6 +3,7 @@ export default [
   {
     path: '/',
     name: 'main',
+    // 存在二級路由出口
     component: () => import('@/views/layouts/index.vue'),
     children: [
       {

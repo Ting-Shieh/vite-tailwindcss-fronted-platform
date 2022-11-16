@@ -9,7 +9,11 @@
           @click="triggerState"
           class="absolute right-1 bottom-1 z-20 p-1 rounded cursor-pointer duration-200 hover:bg-zinc-200"
         >
-          <m-svg-icon class="w-1 h-1" :name="isOpenCategory ? 'fold' : 'unfold'" fillClass="fill-zinc-900"></m-svg-icon>
+          <m-svg-icon
+            class="w-1 h-1"
+            :name="isOpenCategory ? 'fold' : 'unfold'"
+            fillClass="fill-zinc-900"
+          ></m-svg-icon>
         </div>
         <!-- category item -->
         <li 
@@ -31,6 +35,7 @@ import { ref } from 'vue'
 // data
 const isOpenCategory = ref(false)
 const currentCategoryIndex = ref(0) // 選中狀態處理
+
 // methods
 /** 展開狀態切換處理 */
 const triggerState = () => {
@@ -44,3 +49,8 @@ const onItemClick = (index) => {
 <style lang="scss" scoped>
 
 </style>
+/** 
+ * 遇到問題
+ * 1. navigationBar 閃爍問題
+ * => 初始時只有“全部“，之後加載才會顯示所有api過來數據
+ */
