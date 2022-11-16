@@ -15,7 +15,8 @@
     "postcss-nesting": "^10.2.0",
     "vue": "^3.2.41",
     "vue-router": "^4.1.6",
-    "vuex": "^4.1.0"
+    "vuex": "^4.1.0",
+    "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.2.0",
