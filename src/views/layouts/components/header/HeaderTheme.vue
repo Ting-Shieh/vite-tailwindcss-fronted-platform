@@ -2,7 +2,7 @@
   <m-pop-over class="">
     <template #reference>
       <m-svg-icon
-        name="theme-light"
+        :name="svgIconName"
         fillClass="fill-zinc-900 dark:fill-zinc-300"
         class="guide-theme w-4 h-4 p-1 cursor-pointer rounded-sm duration-200 outline-none hover:bg-zinc-100/60 dark:hover:bg-zinc-900"
       ></m-svg-icon>
@@ -12,6 +12,7 @@
         class="flex items-center p-1 cursor-pointer rounded hover:bg-zinc-100/60 dark:hover:bg-zinc-800"
         v-for="item in themeArr"
         :key="item.id"
+        @click="onItemClick(item)"
       >
         <m-svg-icon
           :name="item.icon"
@@ -25,7 +26,8 @@
 </template>
 <script setup>
 import { THEME_SYSTEM, THEME_LIGHT, THEME_DARK } from '@/constants/index.js'
-import {} from 'vue'
+import { computed } from 'vue'
+import { useStore } from 'vuex';
 // 建構渲染數據源
 const themeArr = [
   {
@@ -47,6 +49,18 @@ const themeArr = [
     name: '跟隨系統'
   }
 ]
+const store = useStore()
+// computed
+const svgIconName = computed(() => {
+  // 依據當前的 themeType，返回當前選中的 icon
+  const findTheme = themeArr.find(theme => theme.type === store.getters.themeType)
+  return findTheme.icon
+})
+// methods
+/** 主題切換 */
+const onItemClick = (theme) => {
+  store.commit('theme/changeThemeType', theme.type)
+}
 </script>
 <style lang="scss" scoped>
 </style>

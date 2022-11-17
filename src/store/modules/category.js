@@ -10,6 +10,7 @@ export default {
      * 1.讓 categorys 具備一個初始化數據
      * 2.從服務器獲取數據，替換初始化數據
      * 3.為了防止初始化數據太老，把每一次獲取到的新數據，都作為下一次的初始化數據
+     * 第三步：每次從接口得到數據，進行緩存（localStorage），在下次運行時，把緩存數據作為初始值
      */
     categorys: CATEGORY_NOMAR_DATA
   }),

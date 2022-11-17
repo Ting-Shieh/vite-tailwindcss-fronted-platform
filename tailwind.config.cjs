@@ -1,10 +1,10 @@
 module.exports = {
   // tailwind 應用範圍
   content: ['./index.html', './src/**/*.{vue,js}'],
+  // 手動切換黑夜模式
+  darkMode: 'class',
   theme: {
     extend: {
-      // 手動切換黑夜模式
-      darkMode: 'class',
       height: {
         // h-header h-main
         header: '72px',

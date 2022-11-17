@@ -3,6 +3,8 @@ import router from './router/index.js'
 import store from './store/index.js'
 import { useRem } from './utils/flexible.js'
 import './style.css'
+// 初始化主題
+import useTheme from '@/utils/theme.js'
 // 導入tailwind的基礎指令匯集檔
 import './styles/index.scss'
 // vite處理svg
@@ -12,5 +14,6 @@ import mLibs from './libs/index.js'
 import App from './App.vue'
 
 useRem()
+useTheme()
 const app = createApp(App)
 app.use(mLibs).use(router).use(store).mount('#app')
