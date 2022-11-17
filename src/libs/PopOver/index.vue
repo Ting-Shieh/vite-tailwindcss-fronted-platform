@@ -14,7 +14,7 @@
       <div
         ref="contentRef"
         v-show="isVisable"
-        class="absolute p-1 z-20 bg-white border rounded-md"
+        class="absolute p-1 z-20 bg-white dark:bg-zinc-900 border dark:border-zinc-700 rounded-md"
         :style="contentStyle"
       >
         <!-- 匿名插槽：彈出層視圖中展示的內容 -->

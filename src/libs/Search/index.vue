@@ -11,7 +11,7 @@
         @focus="onFocusHandler"
         @keyup.enter="onSearchHandler"
         @blur="onBlurHandler"
-        class="block bg-zinc-100 caret-zinc-400 rounded-xl w-full h-[44px] pl-4 text-sm outline-0 tracking-wide font-semibold border border-zinc-100 duration-500 group-hover:bg-white group-hover:border-zinc-200 focus:border-red-300"
+        class="block bg-zinc-100 dark:bg-zinc-800 caret-zinc-400 rounded-xl w-full h-[44px] pl-4 text-sm dark:text-zinc-200 outline-0 tracking-wide font-semibold border border-zinc-100 dark:border-zinc-700 duration-500 group-hover:bg-white dark:group-hover:bg-zinc-900 group-hover:border-zinc-200 dark:group-hover:border-zinc-700 focus:border-red-300"
       />
       <!-- 刪除按鈕 -->
       <m-svg-icon
@@ -37,7 +37,7 @@
       <div
         v-if="$slots.dropdown"
         v-show="isFocus"
-        class="max-h-[368px] w-full text-base overflow-auto bg-white absolute left-0 top-[56px] p-2 rounded z-20 border border-zinc-200 duration-200 hover:shadow-3xl"
+        class="max-h-[368px] w-full text-base overflow-auto bg-white dark:bg-zinc-800 absolute left-0 top-[56px] p-2 rounded z-20 border border-zinc-200 dark:border-zinc-600 duration-200 hover:shadow-3xl"
       > 
         <slot name="dropdown" />
       </div>

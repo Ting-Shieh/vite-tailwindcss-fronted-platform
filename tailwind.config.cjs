@@ -3,6 +3,8 @@ module.exports = {
   content: ['./index.html', './src/**/*.{vue,js}'],
   theme: {
     extend: {
+      // 手動切換黑夜模式
+      darkMode: 'class',
       height: {
         // h-header h-main
         header: '72px',
@@ -21,7 +23,8 @@ module.exports = {
       },
       // 期望漢堡按鈕存在一個横向的陰影效果，在 tailwind 中没有對應的樣式，所以我们需要新增該樣式
       boxShadow: {
-        'l-white': '-10px 0 10px white'
+        'l-white': '-10px 0 10px white',
+        'l-zinc': '-10px 0 10px #18181b' // 設置 dark:shadow-l-zinc 色值
       },
       colors: {
         main: '#f44c58',

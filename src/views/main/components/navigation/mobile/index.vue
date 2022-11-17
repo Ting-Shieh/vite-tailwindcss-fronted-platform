@@ -1,8 +1,8 @@
 <template>
-  <div class="bg-white sticky top-0 left-0 z-10">
+  <div class="bg-white sticky top-0 left-0 z-10 dark:bg-zinc-900">
     <ul ref="ulRef" class="relative flex overflow-x-auto p-1 text-xs text-zinc-600 overflow-hidden">
       <!-- 滑塊 -->
-      <li ref="sliderRef" class="absolute bg-zinc-900 rounded-lg h-[22px] duration-200" :style="sliderStyle"></li>
+      <li ref="sliderRef" class="absolute bg-zinc-900 dark:bg-zinc-800  rounded-lg h-[22px] duration-200" :style="sliderStyle"></li>
       <!-- categoryItem class="last:mr-4" 指定最後一個距離右側的距離 -->
       <li
         :ref="setItemRef"
@@ -16,7 +16,7 @@
       </li>
       <!-- 漢堡按鈕 -->
       <li 
-        class="z-20 fixed top-0 right-[-1px] h-4 px-1 flex items-center bg-white shadow-l-white"
+        class="z-20 fixed top-0 right-[-1px] h-4 px-1 flex items-center bg-white dark:bg-zinc-900 shadow-l-white dark:shadow-l-zinc"
         @click="isOpenPopup = !isOpenPopup"
       >
         <m-svg-icon class="w-1.5 h-1.5" name="hamburger"></m-svg-icon>
