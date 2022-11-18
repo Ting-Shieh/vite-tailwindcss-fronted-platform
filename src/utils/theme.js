@@ -1,7 +1,9 @@
 import store from '@/store'
 import { watch } from 'vue'
 import { THEME_DARK, THEME_LIGHT }  from '@/constants/index.js'
+/** 初始化主題 */
 export default () => {
+  // 1.當主題發生改變時，或者當進入系統時，可以進行 html class 的配置
   watch(
     () => store.getters.themeType,
     (nV) => {

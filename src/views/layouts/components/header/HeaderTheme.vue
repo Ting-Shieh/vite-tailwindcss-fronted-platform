@@ -4,12 +4,14 @@
       <m-svg-icon
         :name="svgIconName"
         fillClass="fill-zinc-900 dark:fill-zinc-300"
-        class="guide-theme w-4 h-4 p-1 cursor-pointer rounded-sm duration-200 outline-none hover:bg-zinc-100/60 dark:hover:bg-zinc-900"
+        class="guide-theme w-4 h-4 p-1 cursor-pointer rounded-sm
+        duration-200 outline-none hover:bg-zinc-100/60 dark:hover:bg-zinc-900"
       ></m-svg-icon>
     </template>
     <div class="w-[140px] overflow-hidden">
       <div
-        class="flex items-center p-1 cursor-pointer rounded hover:bg-zinc-100/60 dark:hover:bg-zinc-800"
+        class="flex items-center p-1 cursor-pointer rounded
+        hover:bg-zinc-100/60 dark:hover:bg-zinc-800"
         v-for="item in themeArr"
         :key="item.id"
         @click="onItemClick(item)"
@@ -54,7 +56,7 @@ const store = useStore()
 const svgIconName = computed(() => {
   // 依據當前的 themeType，返回當前選中的 icon
   const findTheme = themeArr.find(theme => theme.type === store.getters.themeType)
-  return findTheme.icon
+  return findTheme?.icon
 })
 // methods
 /** 主題切換 */
