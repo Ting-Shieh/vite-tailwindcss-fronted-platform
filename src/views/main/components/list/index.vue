@@ -1,7 +1,13 @@
 <template>
+  <!-- <m-waterfall
+    :data=""
+    :nodeKey=""
+    :picturePreReading="true"
+  > -->
   <div>
     <item-vue v-for="item in pexelsList" :key="item.id" :data="item"></item-vue>
   </div>
+  <!-- </m-waterfall> -->
 </template>
 <script setup>
 import { getPexelsList } from '@/api/pexel.js'
