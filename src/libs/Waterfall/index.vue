@@ -29,7 +29,8 @@
   </div>
 </template>
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { getImgElements, getAllImg, onComplateImgs} from './utils.js'
+import { computed, nextTick, onMounted, ref, watch } from 'vue'
 const props = defineProps({
   // 數據源
   data: {
@@ -61,7 +62,8 @@ const props = defineProps({
     default: true
   }
 })
-
+// item 高度集合
+let itemHeights = []
 // ===== data  =====
 // 容器總高度
 const containerHeight = ref(0)
@@ -107,7 +109,57 @@ const useColumnWidth = () => {
   useContainerWidth()
   columnWidth.value = (containerWidth.value - columnSpacingTotal.value) / props.column
 }
+/** 監聽圖片加載完成 */
+const waitImgComplete = () => {
+  itemHeights = []
+  // 拿到所有元素
+  let itemElements = [...document.getElementsByClassName('m-waterfall-item')]
+  // 獲取所有元素的 img 標籤圖片
+  const imgElements = getImgElements(itemElements)
+  // 獲取所有 img 標籤圖片
+  const allImgs = getAllImg(imgElements)
+  onComplateImgs(allImgs).then(() => {
+    // 圖片加載完成，獲取高度
+    itemElements.forEach(el => {
+      itemHeights.push(el.offsetHeight)
+    })
+    // 渲染位置
+    useItemLocation()
+  })
+  
+}
+const useItemLocation = () => {
+  console.log(itemHeights)
+}
+/**
+ * 圖片不需要愈加載，計算 item 高度
+ */
+const useItemHeight = () => {
+  itemHeights = []
+  // 拿到所有元素
+  let itemElements = [...document.getElementsByClassName('m-waterfall-item')]
+  // 計算 item 高度
+  itemHeights.forEach(el => {
+    // 依據傳入數據計算出的 img 高度
+    itemHeights.push(el.offsetHeight)
+  })
+  // 渲染位置
+  useItemLocation()
+}
 
+// 觸發計算
+watch(() => props.data, (nV) => {
+  nextTick(() => {
+    if (props.picturePreReading) {
+      waitImgComplete()
+    } else {
+      useItemHeight()
+    }
+  })
+},{
+  immediate: true,
+  deep: true
+})
 onMounted(() => {
   // 計算列寬度
   useColumnWidth()

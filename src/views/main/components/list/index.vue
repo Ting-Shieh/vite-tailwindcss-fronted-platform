@@ -1,13 +1,18 @@
 <template>
-  <!-- <m-waterfall
-    :data=""
-    :nodeKey=""
-    :picturePreReading="true"
-  > -->
   <div>
-    <item-vue v-for="item in pexelsList" :key="item.id" :data="item"></item-vue>
+    <!-- old -->
+    <!-- <item-vue v-for="item in pexelsList" :key="item.id" :data="item"></item-vue> -->
+    <m-waterfall
+      :data="pexelsList"
+      :column="5"
+      :picturePreReading="true"
+    >
+      <!-- 作用域插槽，item 傳出來 -->
+      <template v-slot="{ item, width }">
+        <item-vue :data="item" :width="width"></item-vue>
+      </template>
+    </m-waterfall>
   </div>
-  <!-- </m-waterfall> -->
 </template>
 <script setup>
 import { getPexelsList } from '@/api/pexel.js'
