@@ -21,23 +21,27 @@ export const getAllImg = (imgElements) => {
   })
 }
 /**
+ * 異步 ＝> 用 promise 處理
  * 監聽圖片數組加載完成 （通過 promise 完成）
  * @param {*} imgs 
  */
 export const onComplateImgs = (imgs) => {
   // promise 集合
   const promiseAll = []
-  //循環建構 promiseAll
+  // 循環建構 promiseAll
   imgs.forEach((img, index) => {
     promiseAll[index] = new Promise((resolve, reject) => {
+      // 處理 img 加載情況
       const imgObj = new Image()
       imgObj.src = img
       imgObj.onload = () => {
+        // 圖片加載完成
         resolve({
           img, index
         })
       }
     })
   })
+  // 執行 promiseAll 裡的所有 promise  
   return Promise.all(promiseAll)
 }

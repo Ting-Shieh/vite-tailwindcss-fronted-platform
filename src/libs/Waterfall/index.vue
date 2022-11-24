@@ -3,10 +3,13 @@
     class="relative"
     ref="containerRef"
     :style="{
-      height: containerHeight + 'px' // 因為當前為 relative 佈局，所以需要主動指定高度
+      // 因為當前為 relative 佈局(裡面每一個元素都是脫離文檔流，導致relative高度無法計算)，
+      // 所以需要主動指定高度
+      height: containerHeight + 'px'
     }"
   >
-    <!-- 
+    <!--
+      [數據渲染]
       因為列數不確定，所以需要依據列數計算每列的寬度，
       所以等待列寬計算完成， 並且有了數據後才進行渲染
     -->
@@ -20,11 +23,13 @@
           top: item._style?.top + 'px'
         }"
         v-for="(item, index) in data"
-        :key="nodeKey ? item[nodekey] : index"
+        :key="nodeKey ? item[nodeKey] : index"
       >
+        <!-- 作用域插槽 使用item做傳遞標誌 -->
         <slot :item="item" :index="index" :width="columnWidth"></slot>
       </div>
     </template>
+    <!-- [加載中] -->
     <div v-else>...Loading...</div>
   </div>
 </template>
@@ -75,7 +80,7 @@ const containerRef = ref(null)
 const containerWidth = ref(0)
 // 容器左邊距，計算 item left 時，需要使用定位
 const containerLeft = ref(0)
-// 列寬
+// 列寬 = ( 容器的寬度 - 所有列間距寬度) / 列數
 const columnWidth = ref(0)
 // ===== computed =====
 // 列間距合計
@@ -85,15 +90,20 @@ const columnSpacingTotal = computed(() => {
 })
 
 // ===== methods =====
-/** 建立紀錄各列的高度的對象 */
+/**
+ * 建立紀錄各列的高度的對象
+ */
 const useColumnHeightObj = () => {
   columnHeightObj.value = {}
   for(let i = 0; i < props.column; i++) {
     columnHeightObj.value[i] = 0
   }
 }
-/** 計算容器寬度 */
+/**
+ * 計算容器寬度
+ */
 const useContainerWidth = () => {
+  console.log('getComputedStyle:', getComputedStyle(containerRef.value, null))
   const { paddingLeft, paddingRight } = getComputedStyle(containerRef.value, null)
 
   // 容器左邊距
@@ -107,9 +117,13 @@ const useContainerWidth = () => {
 const useColumnWidth = () => {
   // 計算容器寬度
   useContainerWidth()
+  // 列寬 = ( 容器的寬度 - 所有列間距寬度) / 列數
   columnWidth.value = (containerWidth.value - columnSpacingTotal.value) / props.column
 }
-/** 監聽圖片加載完成 */
+/**
+ * [需要圖片預加載]
+ * 監聽圖片加載完成
+ */
 const waitImgComplete = () => {
   itemHeights = []
   // 拿到所有元素
@@ -118,6 +132,7 @@ const waitImgComplete = () => {
   const imgElements = getImgElements(itemElements)
   // 獲取所有 img 標籤圖片
   const allImgs = getAllImg(imgElements)
+  // 等待圖片加載完成
   onComplateImgs(allImgs).then(() => {
     // 圖片加載完成，獲取高度
     itemElements.forEach(el => {
@@ -157,9 +172,10 @@ watch(() => props.data, (nV) => {
     }
   })
 },{
-  immediate: true,
-  deep: true
+  immediate: true, // 一開始就先觸發一次
+  deep: true // props data 是數組
 })
+// 元素渲染好後再行計算
 onMounted(() => {
   // 計算列寬度
   useColumnWidth()

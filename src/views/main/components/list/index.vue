@@ -4,6 +4,7 @@
     <!-- <item-vue v-for="item in pexelsList" :key="item.id" :data="item"></item-vue> -->
     <m-waterfall
       :data="pexelsList"
+      nodeKey="id"
       :column="5"
       :picturePreReading="true"
     >
