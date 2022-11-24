@@ -45,3 +45,32 @@ export const onComplateImgs = (imgs) => {
   // 執行 promiseAll 裡的所有 promise  
   return Promise.all(promiseAll)
 }
+
+/**
+ * 返回列高對象中的最小高度所在列
+ * @param {*} columnHeightObj 
+ */
+export const getMinHeightColumn = (columnHeightObj) => {
+  const minHeight = getMinHeight(columnHeightObj)
+  return Object.keys(columnHeightObj).find(key => {
+    return columnHeightObj[key] === minHeight
+  })
+}
+
+/**
+ * 返回列高對象中的最小高度
+ * @param {*} columnHeightObj 
+ */
+export const getMinHeight = (columnHeightObj) => {
+  const columnHeightArr = Object.values(columnHeightObj)
+  return Math.min(...columnHeightArr)
+}
+
+/**
+ * 返回列高對象中的最大高度
+ * @param {*} columnHeightObj 
+ */
+export const getMaxHeight = (columnHeightObj) => {
+  const columnHeightArr = Object.values(columnHeightObj)
+  return Math.max(...columnHeightArr)
+}

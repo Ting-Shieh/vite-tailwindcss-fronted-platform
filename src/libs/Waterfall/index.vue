@@ -34,8 +34,8 @@
   </div>
 </template>
 <script setup>
-import { getImgElements, getAllImg, onComplateImgs} from './utils.js'
-import { computed, nextTick, onMounted, ref, watch } from 'vue'
+import { getImgElements, getAllImg, onComplateImgs, getMinHeightColumn, getMinHeight, getMaxHeight } from './utils.js'
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 const props = defineProps({
   // 數據源
   data: {
@@ -143,8 +143,55 @@ const waitImgComplete = () => {
   })
   
 }
+/**
+ * 返回下一個 item 的 Ｌeft
+ */
+const getItemLeft = () => {
+  const column = getMinHeightColumn(columnHeightObj.value)
+  return (
+    column * (columnWidth.value + props.columnSpacing) + containerLeft.value
+  )
+}
+/**
+ * 返回下一個 item 的 Top
+ */
+const getItemTop = () => {
+  // 列高對象中的最小高度
+  return getMinHeight(columnHeightObj.value)
+}
+
+/**
+ * 指定列高自增
+ * @param {*} index 
+ */
+const increasingHeight = (index) => {
+  // 最小高度所在列
+  const minHeightColumn = getMinHeightColumn(columnHeightObj.value)
+  // 該列高度自增
+  columnHeightObj.value[minHeightColumn] += itemHeights[index] + props.rowSpacing
+}
+/**
+ * 為每個 item 生成位置屬性
+ */
 const useItemLocation = () => {
-  console.log(itemHeights)
+  // console.log(itemHeights)
+  // 遍歷數據源
+  props.data.forEach((item, index) => {
+    // 避免重複計算
+    if (item._style) {
+      return
+    }
+    // 生成 _style 屬性
+    item._style = {}
+    // left
+    item._style.left = getItemLeft()
+    // top
+    item._style.top = getItemTop()
+    // 指定列高度自增
+    increasingHeight(index)
+  })
+  // 指定容器高度
+  containerHeight.value = getMaxHeight(columnHeightObj.value)
 }
 /**
  * 圖片不需要愈加載，計算 item 高度
@@ -164,6 +211,12 @@ const useItemHeight = () => {
 
 // 觸發計算
 watch(() => props.data, (nV) => {
+  // 重置數據源
+  const resetColumnHeight = nV.every(item => !item._style)
+  if (resetColumnHeight) {
+    // 構建高度紀錄容器
+    useColumnHeightObj()
+  }
   nextTick(() => {
     if (props.picturePreReading) {
       waitImgComplete()
@@ -180,6 +233,14 @@ onMounted(() => {
   // 計算列寬度
   useColumnWidth()
   console.log('計算列寬度: ', columnWidth.value)
+})
+/**
+ * 組件銷毀時，清除所有的 _style
+ */
+onUnmounted(() => {
+  props.data.forEach(item => {
+    delete item._style
+  })
 })
 </script>
 <style lang="scss" scoped>
