@@ -210,6 +210,19 @@ const useItemHeight = () => {
   // 渲染位置
   useItemLocation()
 }
+/**
+ * 重新勾建瀑布流
+ */
+const reset = () => {
+  setTimeout(() => {
+    // 重新計算列寬
+    useColumnWidth()
+    // 重置所有定位數據
+    props.data.forEach(item => {
+      item._style = null
+    })
+  }, 100)
+}
 
 // 觸發計算
 watch(() => props.data, (nV) => {
@@ -229,6 +242,17 @@ watch(() => props.data, (nV) => {
 },{
   immediate: true, // 一開始就先觸發一次
   deep: true // props data 是數組
+})
+
+/**
+ * 監聽列數變化
+ */
+watch(() => props.column, () => {
+  // [數據渲染]停止
+  columnWidth.value = 0
+  // 數據改變之後，視圖改變之後的回調
+  // nextTick(() => {})
+  reset()
 })
 // 元素渲染好後再行計算
 onMounted(() => {

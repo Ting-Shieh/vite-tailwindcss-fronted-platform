@@ -3,9 +3,10 @@
     <!-- old -->
     <!-- <item-vue v-for="item in pexelsList" :key="item.id" :data="item"></item-vue> -->
     <m-waterfall
+      class="px-1 w-full"
       :data="pexelsList"
       nodeKey="id"
-      :column="5"
+      :column="isMobileTerminal ? 2 : 5"
       :picturePreReading="true"
     >
       <!-- 作用域插槽，item 傳出來 -->
@@ -18,6 +19,7 @@
 <script setup>
 import { getPexelsList } from '@/api/pexel.js'
 import ItemVue from './item.vue'
+import { isMobileTerminal } from '@/utils/flexible.js'
 import { ref } from 'vue'
 // 建立數據請求
 let query = {
