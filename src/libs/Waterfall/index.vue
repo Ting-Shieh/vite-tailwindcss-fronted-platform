@@ -69,6 +69,7 @@ const props = defineProps({
 })
 // item 高度集合
 let itemHeights = []
+
 // ===== data  =====
 // 容器總高度
 const containerHeight = ref(0)
@@ -149,6 +150,7 @@ const waitImgComplete = () => {
 const getItemLeft = () => {
   const column = getMinHeightColumn(columnHeightObj.value)
   return (
+    // 最小高度所在列 * (列寬度 ＋ 列間距) + 瀑布流左邊距 
     column * (columnWidth.value + props.columnSpacing) + containerLeft.value
   )
 }
@@ -167,7 +169,7 @@ const getItemTop = () => {
 const increasingHeight = (index) => {
   // 最小高度所在列
   const minHeightColumn = getMinHeightColumn(columnHeightObj.value)
-  // 該列高度自增
+  // 該列高度自增 => 當前item 裡面的高度 + 行間距
   columnHeightObj.value[minHeightColumn] += itemHeights[index] + props.rowSpacing
 }
 /**
@@ -211,10 +213,10 @@ const useItemHeight = () => {
 
 // 觸發計算
 watch(() => props.data, (nV) => {
-  // 重置數據源
+  // 第一次獲取數據時，構建高度紀錄容器（重置數據源）
   const resetColumnHeight = nV.every(item => !item._style)
   if (resetColumnHeight) {
-    // 構建高度紀錄容器
+    // 重新構建高度紀錄容器
     useColumnHeightObj()
   }
   nextTick(() => {

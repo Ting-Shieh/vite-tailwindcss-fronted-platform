@@ -4,7 +4,9 @@
     <!-- pc端頭部 -->
     <header-vue class="h-header"></header-vue>
     <!-- 二級路由出口 -->
-    <main-vue class="h-main" />
+    <div class="h-main">
+      <main-vue />
+    </div>
     <!-- 右下角懸浮區域 -->
     <floating-vue class=""/>
   </div>
