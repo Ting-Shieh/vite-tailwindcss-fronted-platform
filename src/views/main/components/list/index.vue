@@ -2,12 +2,15 @@
   <div>
     <!-- old -->
     <!-- <item-vue v-for="item in pexelsList" :key="item.id" :data="item"></item-vue> -->
+    <!-- 
+      picturePreReading: true 預加載 | false 非預加載
+     -->
     <m-waterfall
       class="px-1 w-full"
       :data="pexelsList"
       nodeKey="id"
       :column="isMobileTerminal ? 2 : 5"
-      :picturePreReading="true"
+      :picturePreReading="false"
     >
       <!-- 作用域插槽，item 傳出來 -->
       <template v-slot="{ item, width }">
