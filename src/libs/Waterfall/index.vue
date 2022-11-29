@@ -203,7 +203,7 @@ const useItemHeight = () => {
   // 拿到所有元素
   let itemElements = [...document.getElementsByClassName('m-waterfall-item')]
   // 計算 item 高度
-  itemHeights.forEach(el => {
+  itemElements.forEach(el => {
     // 依據傳入數據計算出的 img 高度
     itemHeights.push(el.offsetHeight)
   })
@@ -221,7 +221,7 @@ const reset = () => {
     props.data.forEach(item => {
       item._style = null
     })
-  }, 100)
+  }, 200)
 }
 
 // 觸發計算
@@ -248,12 +248,13 @@ watch(() => props.data, (nV) => {
  * 監聽列數變化
  */
 watch(() => props.column, () => {
-  if (props.picturePreReading){
+  if (props.picturePreReading) { 
     // [數據渲染]停止
     columnWidth.value = 0
     // 數據改變之後，視圖改變之後的回調
     // 等待頁面渲染之後，重新執行計算。否則在 item 没有指定過高度的前提下，計算出的 item 高度會不正確
-    nextTick(reset)
+    // nextTick(reset)
+    reset()
   } else {
     reset()
   }
