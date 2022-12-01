@@ -7,7 +7,7 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // add icode
-    config.headers.icode = 'DF5E456E00B3D145'
+    config.headers.icode = '1CF074811DEB52E6'
     return config
   }
 )

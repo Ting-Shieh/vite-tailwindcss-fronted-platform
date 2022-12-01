@@ -44,7 +44,7 @@ useIntersectionObserver(
       // 修改加載數據標記
       loading.value = true
       // 觸發加載更多
-      emits('onLoad`')
+      emits('onLoad')
     }
   }  
 )
