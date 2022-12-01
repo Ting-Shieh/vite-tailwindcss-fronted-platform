@@ -15,7 +15,7 @@
   </div>
 </template>
 <script setup>
-import { useVModel } from '@vueuse/core'
+import { useVModel, useIntersectionObserver } from '@vueuse/core'
 import { ref } from 'vue'
 
 const props = defineProps({
@@ -33,8 +33,21 @@ const props = defineProps({
 const emits = defineEmits(['onLoad', 'update:modelValue'])
 // 處理loading狀態
 const loading = useVModel(props)
+// 滾動元素
+const loadingRef = ref(null) 
 
-const loadingRef = ref(null)
+useIntersectionObserver(
+  loadingRef,
+  // isIntersecting: 當前元素是否可見
+  ([{isIntersecting}], observerElement) => {
+    if (isIntersecting && !loading.value && !props.isFinished) {
+      // 修改加載數據標記
+      loading.value = true
+      // 觸發加載更多
+      emits('onLoad`')
+    }
+  }  
+)
 </script>
 <style lang="scss" scoped>
 
